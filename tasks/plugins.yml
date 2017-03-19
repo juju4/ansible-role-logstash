@@ -13,6 +13,7 @@
   register: logstash_plugins_list
   changed_when: false
 
+- debug: var=env
 - name: Install configured plugins.
   command: >
     ./bin/logstash-plugin install {{ item }}
@@ -20,3 +21,5 @@
   with_items: "{{ logstash_install_plugins }}"
   when: "item not in logstash_plugins_list.stdout"
   notify: restart logstash
+  environment:
+    JAVA_HOME: /usr
