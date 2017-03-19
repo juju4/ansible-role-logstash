@@ -6,14 +6,16 @@
     logstash_dir: /usr/share/logstash
   when: logstash_repo_version ==  '5.x'
 
+- debug: var=env
 - name: Get list of installed plugins.
   command: >
     ./bin/logstash-plugin list
     chdir={{ logstash_dir }}
   register: logstash_plugins_list
   changed_when: false
+  environment:
+    JAVA_HOME: /usr
 
-- debug: var=env
 - name: Install configured plugins.
   command: >
     ./bin/logstash-plugin install {{ item }}
