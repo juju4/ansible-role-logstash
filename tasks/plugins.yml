@@ -6,7 +6,6 @@
     logstash_dir: /usr/share/logstash
   when: logstash_repo_version ==  '5.x'
 
-- debug: var=env
 - name: Get list of installed plugins.
   command: >
     ./bin/logstash-plugin list
