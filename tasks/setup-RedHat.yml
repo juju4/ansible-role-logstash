@@ -12,3 +12,6 @@
 
 - name: Install Logstash.
   yum: pkg=logstash state=installed
+## https://discuss.elastic.co/t/unable-to-install-logstash-5-0-need-help/64489
+  environment:
+    JAVACMD: /usr/bin/java
