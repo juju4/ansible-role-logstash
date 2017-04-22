@@ -10,8 +10,14 @@
     dest: /etc/yum.repos.d/logstash.repo
     mode: 0644
 
+- name: recover JAVA_HOME
+  shell: "java -XshowSettings 2>&1 |awk '/java.home/ { print $3 }'"
+  changed_when: false
+  register: javasettings
+
 - name: Install Logstash.
   yum: pkg=logstash state=installed
 ## https://discuss.elastic.co/t/unable-to-install-logstash-5-0-need-help/64489
   environment:
-    JAVACMD: /usr/bin/java
+#    JAVACMD: /usr/bin/java
+    JAVA_HOME: "{{ javasettings.stdout | default('') }}"
